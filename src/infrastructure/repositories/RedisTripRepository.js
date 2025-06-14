@@ -40,7 +40,8 @@ class RedisTripRepository extends ITripRepository {
     // Save trip data
     await this.redisClient.set(
       this._tripKey(trip.id), 
-      JSON.stringify(trip.toJSON())
+      JSON.stringify(trip.toJSON()),
+      null, // No expiration
     );
 
     // Add to trip list
@@ -57,7 +58,7 @@ class RedisTripRepository extends ITripRepository {
     try {
       // Get all trip IDs
       const tripIds = await this.redisClient.client.sMembers(this.tripListKey);
-      
+
       if (!tripIds || tripIds.length === 0) {
         return [];
       }

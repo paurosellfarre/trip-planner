@@ -44,6 +44,11 @@ class ValidationMiddleware {
    * @param {Function} next - Express next function
    */
   static validateSaveTrip(req, res, next) {
+    
+    if (Array.isArray(req.body)) {
+      return next(new ValidationError('Request body must be a single trip object, not an array'));
+    }
+
     const { origin, destination, cost, duration, type } = req.body;
     const errors = [];
 
@@ -69,7 +74,9 @@ class ValidationMiddleware {
 
     if (!type) {
       errors.push('Type is required');
-    }    if (errors.length > 0) {
+    }
+    
+    if (errors.length > 0) {
       return next(new ValidationError(errors.join('; ')));
     }
 

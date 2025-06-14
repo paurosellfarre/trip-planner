@@ -72,8 +72,13 @@ class RedisCacheService {
     if (!this.client?.isReady) return false;
     
     try {
-      await this.client.set(key, value, { EX: ttl });
-      logger.debug(`Cache set for key: ${key} with TTL: ${ttl}s`);
+      if (!ttl) {
+        await this.client.set(key, value);
+        logger.debug(`Redis set for key: ${key} (persistent)`);
+      } else {
+        await this.client.set(key, value, { EX: ttl });
+        logger.debug(`Cache set for key: ${key} with TTL: ${ttl}s`);
+      }
       return true;
     } catch (error) {
       logger.error('Redis set error:', { message: error.message });

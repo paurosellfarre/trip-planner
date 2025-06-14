@@ -12,7 +12,6 @@ class RedisTripAuthenticityService extends ITripAuthenticityService {
     super();
     this.redisClient = redisClient;
     this.validTripsPrefix = 'valid-trip:';
-    this.validTripsTTL = 86400; // 24 hours
   }
 
   /**
@@ -39,16 +38,33 @@ class RedisTripAuthenticityService extends ITripAuthenticityService {
   }
 
   /**
+   * Check if a trip hash cache already exists
+   * @private
+   * @param {string} hash - Trip hash
+   * @returns {Promise<boolean>} True if trip hash exists
+   */
+  async _tripHashExists(hash) {
+    const existingTrip = await this.redisClient.get(this._validTripKey(hash));
+    return existingTrip !== null;
+  }
+
+  /**
    * Register a trip as valid
    * @param {Trip} trip - Trip to register
    * @returns {Promise<void>}
    */
   async registerValidTrip(trip) {
     const hash = this._generateTripHash(trip);
+
+    // Check if the trip hash already exists
+    if (await this._tripHashExists(hash)) {
+      return; // Trip is already registered
+    }
+
     await this.redisClient.set(
       this._validTripKey(hash),
       JSON.stringify(trip.toJSON()),
-      this.validTripsTTL
+      null, // No expiration
     );
   }
 
