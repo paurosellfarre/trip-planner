@@ -5,7 +5,7 @@ const logger = require('../../shared/utils/logger');
 /**
  * Redis cache implementation for caching API responses
  */
-class RedisCache {
+class RedisCacheService {
   constructor() {
     this.client = null;
     this.ttl = config.redis.ttl;
@@ -38,7 +38,6 @@ class RedisCache {
       await this.client.connect();    } catch (error) {
       logger.warn('Redis connection error:', { message: error.message });
       logger.info('Continuing without cache');
-      // Continue without cache if Redis is unavailable
     }
   }
 
@@ -86,7 +85,8 @@ class RedisCache {
    * Delete a value from the cache
    * @param {string} key - The cache key
    * @returns {Promise<boolean>} Success indicator
-   */  async delete(key) {
+   */  
+  async delete(key) {
     if (!this.client?.isReady) return false;
     
     try {
@@ -110,4 +110,4 @@ class RedisCache {
   }
 }
 
-module.exports = RedisCache;
+module.exports = RedisCacheService;

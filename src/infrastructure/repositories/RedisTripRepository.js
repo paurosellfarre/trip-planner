@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
  */
 class RedisTripRepository extends ITripRepository {
   /**
-   * @param {RedisCache} redisClient - Redis client for data storage
+   * @param {RedisCacheService} redisClient - Redis client for data storage
    */
   constructor(redisClient) {
     super();

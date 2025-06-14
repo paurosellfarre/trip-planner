@@ -7,12 +7,15 @@ const Trip = require('../../domain/entities/trip');
 class SearchTripsUseCase {
   /**
    * @param {ITripService} tripService - Service for fetching trips
-   * @param {RedisCache} cacheService - Cache service for storing results
+   * @param {RedisCacheService} cacheService - Cache service for storing results
+   * @param {ITripValidationService} tripValidationService - Service for validating trips
    */
-  constructor(tripService, cacheService) {
+  constructor(tripService, cacheService, tripValidationService) {
     this.tripService = tripService;
     this.cacheService = cacheService;
+    this.tripValidationService = tripValidationService;
   }
+
   /**
    * Searches for trips from an origin to a destination with sorting
    * @param {string} origin - IATA code for origin
@@ -22,8 +25,8 @@ class SearchTripsUseCase {
    * @throws {ValidationError} If parameters are invalid
    */
   async execute(origin, destination, sortBy) {
-    
-    
+
+
     // Validate sort parameter
     if (sortBy !== 'fastest' && sortBy !== 'cheapest') {
       throw new ValidationError("Sort parameter must be either 'fastest' or 'cheapest'");
@@ -56,6 +59,11 @@ class SearchTripsUseCase {
     
     // Save to cache
     await this.cacheService.set(cacheKey, JSON.stringify(trips));
+
+    // Register each trip as valid
+    for (const trip of trips) {
+      await this.tripValidationService.registerValidTrip(trip);
+    }
 
     // Sort and return results
     return this.sortTrips(trips, sortBy);
