@@ -1,10 +1,10 @@
 const crypto = require('crypto');
-const ITripValidationService = require('../../domain/services/ITripValidationService');
+const ITripAuthenticityService = require('../../domain/services/ITripAuthenticityService');
 
 /**
  * Redis implementation of trip validation service
  */
-class RedisTripValidationService extends ITripValidationService {
+class RedisTripAuthenticityService extends ITripAuthenticityService {
   /**
    * @param {RedisCacheService} redisClient - Redis client
    */
@@ -64,4 +64,4 @@ class RedisTripValidationService extends ITripValidationService {
   }
 }
 
-module.exports = RedisTripValidationService;
+module.exports = RedisTripAuthenticityService;

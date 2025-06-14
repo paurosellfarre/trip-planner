@@ -1,12 +1,12 @@
 const axios = require('axios');
 const Trip = require('../../domain/entities/trip');
-const ITripService = require('../../domain/services/ITripService');
+const ITripSearchService = require('../../domain/services/ITripSearchService');
 const logger = require('../../shared/utils/logger');
 
 /**
  * Implementation of ITripService that uses the external Trip API
  */
-class ExternalTripAPIService extends ITripService {
+class ExternalTripAPIService extends ITripSearchService {
   constructor() {
     super();
     this.apiUrl = process.env.TRIP_API_URL;

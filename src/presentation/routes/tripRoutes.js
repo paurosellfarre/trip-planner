@@ -13,18 +13,18 @@ const TripController = require('../controllers/TripController');
 
 // Import services and repositories
 const ExternalTripAPIService = require('../../infrastructure/services/ExternalTripAPIService');
-const RedisTripValidationService = require('../../infrastructure/services/RedisTripValidationService');
+const RedisTripAuthenticityService = require('../../infrastructure/services/RedisTripAuthenticityService');
 const RedisCacheService = require('../../infrastructure/services/RedisCacheService');
 const RedisTripRepository = require('../../infrastructure/repositories/RedisTripRepository');
 
 // Create instances
-const RedisCacheService = new RedisCacheService();
+const redisService = new RedisCacheService();
 const externalpTripService = new ExternalTripAPIService();
-const tripValidationService = new RedisTripValidationService(RedisCacheService);
-const tripRepository = new RedisTripRepository(RedisCacheService); // Correct. Infra reopsitory can inject infra services
+const tripValidationService = new RedisTripAuthenticityService(redisService);
+const tripRepository = new RedisTripRepository(redisService); // Correct. Infra reopsitory can inject infra services
 
 // Create use cases
-const searchTripsUseCase = new SearchTripsUseCase(externalpTripService, RedisCacheService, tripValidationService);
+const searchTripsUseCase = new SearchTripsUseCase(externalpTripService, redisService, tripValidationService);
 const saveTripUseCase = new SaveTripUseCase(tripRepository, tripValidationService);
 const listTripsUseCase = new ListTripsUseCase(tripRepository);
 const deleteTripUseCase = new DeleteTripUseCase(tripRepository);
