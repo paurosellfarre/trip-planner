@@ -14,10 +14,11 @@ class ITripService {
   }
 
   /**
-   * Gets all supported locations (IATA codes)
-   * @returns {Promise<string[]>} Array of supported IATA codes
+   * Check if a location is supported
+   * @param {string} location - IATA code to check
+   * @returns {boolean} True if supported
    */
-  async getSupportedLocations() {
+  isLocationSupported(location) {
     throw new Error('Method not implemented');
   }
 }
