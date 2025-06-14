@@ -1,4 +1,4 @@
-const Trip = require('../../domain/entities/trip');
+const Trip = require('../../domain/entities/Trip');
 
 /**
  * Controller for trip-related endpoints

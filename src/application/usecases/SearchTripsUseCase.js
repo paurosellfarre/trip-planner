@@ -1,5 +1,5 @@
 const { ValidationError } = require('../../shared/errors/AppErrors');
-const Trip = require('../../domain/entities/trip');
+const Trip = require('../../domain/entities/Trip');
 
 /**
  * Use case for searching trips

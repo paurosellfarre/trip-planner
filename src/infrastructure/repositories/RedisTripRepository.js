@@ -1,5 +1,5 @@
 const ITripRepository = require('../../domain/repositories/ITripRepository');
-const Trip = require('../../domain/entities/trip');
+const Trip = require('../../domain/entities/Trip');
 const { v4: uuidv4 } = require('uuid');
 
 /**

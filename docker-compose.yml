@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CACHE_TTL=300
+      - TRIP_API_URL=${TRIP_API_URL}
+      - TRIP_API_KEY=${TRIP_API_KEY}
+    depends_on:
+      - redis
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - trip-network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - trip-network
+
+networks:
+  trip-network:
+    driver: bridge
+
+volumes:
+  redis-data:

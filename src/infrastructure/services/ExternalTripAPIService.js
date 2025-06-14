@@ -1,5 +1,5 @@
 const axios = require('axios');
-const Trip = require('../../domain/entities/trip');
+const Trip = require('../../domain/entities/Trip');
 const ITripSearchService = require('../../domain/services/ITripSearchService');
 const logger = require('../../shared/utils/logger');
 
