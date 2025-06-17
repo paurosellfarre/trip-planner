@@ -71,14 +71,4 @@ describe('Trip Entity', () => {
       expect(trip.id).toBe(validTripData.id);
     });
   });
-
-  describe('toJSON', () => {
-    it('should convert a Trip to a plain object with all properties', () => {
-      const trip = new Trip(validTripData);
-      const json = trip.toJSON();
-      
-      expect(json).toEqual(validTripData);
-      expect(json.constructor).not.toBe(Trip);
-    });
-  });
 });

@@ -18,12 +18,13 @@ class Trip {
    */
   isValid() {
     return (
-      this.origin &&
-      this.destination &&
+      typeof this.origin === 'string' &&
+      typeof this.destination === 'string' &&
       typeof this.cost === 'number' &&
       typeof this.duration === 'number' &&
-      this.type &&
-      this.id
+      typeof this.type === 'string' &&
+      typeof this.id === 'string' &&
+      typeof this.display_name === 'string'
     );
   }
 
