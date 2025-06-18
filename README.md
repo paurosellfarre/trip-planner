@@ -67,6 +67,11 @@ Run the test suite:
 npm test
 ```
 
+Test coverage can be generated with:
+
+```bash
+npm run test:coverage
+```
 
 ## API Documentation
 
