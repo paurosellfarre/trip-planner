@@ -22,7 +22,7 @@ The 3rd party API powering the experience in the background defines a `Trip` in 
 }
 ```
 
-You can query in the background the `trips` API by using this endpoint https://z0qw1e7jpd.execute-api.eu-west-1.amazonaws.com/default/trips
+You can query in the background the `trips` API by using this endpoint 
 
 You can use the API key provided in the email to authenticate each request by using the header `x-api-key`.
 
